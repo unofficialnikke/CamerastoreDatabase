@@ -15,8 +15,7 @@ public class ProductController {
     @Autowired
     public ProductController(ProductRepository repository) {
         this.repository = repository;
-    }
-
+      
     @GetMapping("/api/products")
     public Iterable<Product> getProducts() {
         return repository.findAll();
