@@ -10,11 +10,17 @@ import java.util.Optional;
 
 @RestController
 public class ProductController {
+<<<<<<< HEAD
     private final ProductRepository repository;
 
     @Autowired
     public ProductController(ProductRepository repository) {
         this.repository = repository;
+=======
+    @GetMapping("/hello")
+    public String helloWorld() {
+        return "Hello guys";
+>>>>>>> cb3d97ea23cfe5e430b9e8aff323ab5b2b094c1c
     }
 
     @GetMapping("/api/products")
