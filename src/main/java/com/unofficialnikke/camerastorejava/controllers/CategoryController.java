@@ -1,6 +1,7 @@
 package com.unofficialnikke.camerastorejava.controllers;
 
 import com.unofficialnikke.camerastorejava.dto.CategoryDto;
+import com.unofficialnikke.camerastorejava.dto.SupplierDto;
 import com.unofficialnikke.camerastorejava.entities.CategoryEntity;
 import com.unofficialnikke.camerastorejava.mappers.Mapper;
 import com.unofficialnikke.camerastorejava.services.CategoryService;
@@ -25,10 +26,20 @@ public class CategoryController {
     }
 
     @PostMapping("/api/category")
-    public CategoryDto saveCategory(@RequestBody CategoryDto category) {
+    public ResponseEntity<CategoryDto> saveCategory(@RequestBody CategoryDto category) {
         CategoryEntity categoryEntity = categoryMapper.mapFrom(category);
         CategoryEntity savedCategoryEntity = categoryService.save(categoryEntity);
-        return categoryMapper.mapTo(savedCategoryEntity);
+        CategoryDto categoryDto = categoryMapper.mapTo(savedCategoryEntity);
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoryDto);
+    }
+
+    @PatchMapping("/api/category/{id}")
+    public ResponseEntity<CategoryDto> updateCategory(@RequestBody CategoryDto category, @PathVariable("id") Long id) {
+        CategoryEntity categoryEntity = categoryMapper.mapFrom(category);
+        categoryEntity.setId(id);
+        CategoryEntity updatedCategoryEntity = categoryService.update(categoryEntity);
+        CategoryDto updatedCategoryDto = categoryMapper.mapTo(updatedCategoryEntity);
+        return ResponseEntity.ok(updatedCategoryDto);
     }
 
     @GetMapping("/api/categories")

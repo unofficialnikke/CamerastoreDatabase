@@ -9,6 +9,8 @@ public interface CategoryService {
 
     CategoryEntity save(CategoryEntity categoryEntity);
 
+    CategoryEntity update(CategoryEntity categoryEntity);
+
     List<CategoryEntity> findAll();
 
     Optional<CategoryEntity> findOne(Long id);

@@ -27,7 +27,7 @@ public class CategoryEntity {
     }
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "categoryEntity")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryEntity")
     private List<ProductEntity> productEntities;
 
 }

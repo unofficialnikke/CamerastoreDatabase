@@ -10,6 +10,8 @@ public interface ProductService {
 
     ProductEntity save(ProductDto productDto);
 
+    ProductEntity update(ProductDto productDto);
+
     List<ProductEntity> findAll();
 
     Optional<ProductEntity> findOne(Long id);

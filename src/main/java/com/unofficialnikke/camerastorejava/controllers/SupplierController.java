@@ -25,10 +25,20 @@ public class SupplierController {
     }
 
     @PostMapping("/api/supplier")
-    public SupplierDto saveSupplier(@RequestBody SupplierDto supplier) {
+    public ResponseEntity<SupplierDto> saveSupplier(@RequestBody SupplierDto supplier) {
         SupplierEntity supplierEntity = supplierMapper.mapFrom(supplier);
         SupplierEntity savedSupplierEntity = supplierService.save(supplierEntity);
-        return supplierMapper.mapTo(savedSupplierEntity);
+        SupplierDto supplierDto = supplierMapper.mapTo(savedSupplierEntity);
+        return ResponseEntity.status(HttpStatus.CREATED).body(supplierDto);
+    }
+
+    @PatchMapping("/api/supplier/{id}")
+    public ResponseEntity<SupplierDto> updateSupplier(@RequestBody SupplierDto supplier, @PathVariable("id") Long id) {
+        SupplierEntity supplierEntity = supplierMapper.mapFrom(supplier);
+        supplierEntity.setId(id);
+        SupplierEntity updatedSupplierEntity = supplierService.update(supplierEntity);
+        SupplierDto updatedSupplierDto = supplierMapper.mapTo(updatedSupplierEntity);
+        return ResponseEntity.ok(updatedSupplierDto);
     }
 
     @GetMapping("/api/suppliers")

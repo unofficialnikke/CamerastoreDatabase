@@ -22,7 +22,7 @@ public class ProductEntity {
     @Column(nullable = false)
     private String brand;
 
-    @Column(nullable = false, length = 512)
+    @Column(length = 512)
     private String description;
     private int quantity;
 

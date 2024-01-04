@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 import java.util.stream.Collectors;
@@ -40,6 +41,18 @@ public class ProductServiceImpl implements ProductService {
         productEntity.setSupplierEntity(supplierEntity);
         productEntity.setCategoryEntity(categoryEntity);
         return productRepository.save(productEntity);
+    }
+
+    @Override
+    public ProductEntity update(ProductDto productDto) {
+        ProductEntity existingProductEntity = productRepository.findById(productDto.getId())
+                .orElseThrow(() -> new NoSuchElementException("Product not found"));
+        SupplierEntity supplierEntity = modelMapper.map(productDto.getSupplier(), SupplierEntity.class);
+        CategoryEntity categoryEntity = modelMapper.map(productDto.getCategory(), CategoryEntity.class);
+        existingProductEntity.setSupplierEntity(supplierEntity);
+        existingProductEntity.setCategoryEntity(categoryEntity);
+        modelMapper.map(productDto, existingProductEntity);
+        return productRepository.save(existingProductEntity);
     }
 
     @Override

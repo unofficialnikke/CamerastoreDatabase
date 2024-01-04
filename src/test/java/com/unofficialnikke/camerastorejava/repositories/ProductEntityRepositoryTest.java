@@ -19,20 +19,21 @@ public class ProductEntityRepositoryTest {
     private ProductRepository productRepository;
     @Autowired
     private CategoryRepository categoryRepository;
-
     @Autowired
     private SupplierRepository supplierRepository;
     private ProductEntity savedProductEntity;
     private CategoryEntity savedCategoryEntity;
-    private SupplierEntity savedSupplier;
+    private SupplierEntity savedSupplierEntity;
 
     @BeforeEach
     public void setUp() {
         CategoryEntity categoryEntity = new CategoryEntity();
+        categoryEntity.setName("Cameras");
         savedCategoryEntity = categoryRepository.save(categoryEntity);
 
         SupplierEntity supplierEntity = new SupplierEntity();
-        savedSupplier = supplierRepository.save(supplierEntity);
+        supplierEntity.setPhone("12345");
+        savedSupplierEntity = supplierRepository.save(supplierEntity);
 
         ProductEntity productEntity = new ProductEntity();
         productEntity.setTitle("Nikon Z6");
@@ -40,7 +41,7 @@ public class ProductEntityRepositoryTest {
         productEntity.setDescription("Nice camera");
         productEntity.setBrand("Nikon");
         productEntity.setCategoryEntity(savedCategoryEntity);
-        productEntity.setSupplierEntity(savedSupplier);
+        productEntity.setSupplierEntity(savedSupplierEntity);
         savedProductEntity = productRepository.save(productEntity);
     }
 
@@ -50,6 +51,8 @@ public class ProductEntityRepositoryTest {
         assertEquals("Nikon Z6", savedProductEntity.getTitle());
         assertEquals("Nice camera", savedProductEntity.getDescription());
         assertEquals(1200, savedProductEntity.getPrice());
+        assertEquals(savedCategoryEntity, savedProductEntity.getCategoryEntity());
+        assertEquals(savedSupplierEntity, savedProductEntity.getSupplierEntity());
     }
 
     @Test

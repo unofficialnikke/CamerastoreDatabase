@@ -24,10 +24,20 @@ public class ProductController {
     }
 
     @PostMapping("/api/product")
-    public ProductDto saveProduct(@RequestBody ProductDto product) {
+    public ResponseEntity<ProductDto> saveProduct(@RequestBody ProductDto product) {
         ProductEntity productEntity = productMapper.mapFrom(product);
         ProductEntity savedProductEntity = productService.save(product);
-        return productMapper.mapTo(savedProductEntity);
+        ProductDto productDto = productMapper.mapTo(savedProductEntity);
+        return ResponseEntity.status(HttpStatus.CREATED).body(productDto);
+    }
+
+    @PatchMapping("/api/product/{id}")
+    public ResponseEntity<ProductDto> updateProduct(@RequestBody ProductDto product, @PathVariable("id") Long id) {
+        ProductEntity productEntity = productMapper.mapFrom(product);
+        product.setId(id);
+        ProductEntity updatedProductEntity = productService.update(product);
+        ProductDto updatedProductDto = productMapper.mapTo(updatedProductEntity);
+        return ResponseEntity.ok(updatedProductDto);
     }
 
     @GetMapping("/api/products")

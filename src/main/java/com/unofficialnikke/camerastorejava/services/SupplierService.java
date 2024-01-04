@@ -9,6 +9,8 @@ public interface SupplierService {
 
     SupplierEntity save(SupplierEntity supplierEntity);
 
+    SupplierEntity update(SupplierEntity supplierEntity);
+
     List<SupplierEntity> findAll();
 
     Optional<SupplierEntity> findOne(Long id);
