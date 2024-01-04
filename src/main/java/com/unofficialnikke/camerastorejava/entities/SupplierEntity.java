@@ -29,7 +29,7 @@ public class SupplierEntity {
     }
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplierEntity")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "supplierEntity")
     private List<ProductEntity> productEntities;
 
 }

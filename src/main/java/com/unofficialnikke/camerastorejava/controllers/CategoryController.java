@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/api")
 public class CategoryController {
 
     private CategoryService categoryService;
@@ -25,7 +26,7 @@ public class CategoryController {
         this.categoryMapper = categoryMapper;
     }
 
-    @PostMapping("/api/category")
+    @PostMapping("/category")
     public ResponseEntity<CategoryDto> saveCategory(@RequestBody CategoryDto category) {
         CategoryEntity categoryEntity = categoryMapper.mapFrom(category);
         CategoryEntity savedCategoryEntity = categoryService.save(categoryEntity);
@@ -33,7 +34,7 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryDto);
     }
 
-    @PatchMapping("/api/category/{id}")
+    @PutMapping("/category/{id}")
     public ResponseEntity<CategoryDto> updateCategory(@RequestBody CategoryDto category, @PathVariable("id") Long id) {
         CategoryEntity categoryEntity = categoryMapper.mapFrom(category);
         categoryEntity.setId(id);
@@ -42,7 +43,7 @@ public class CategoryController {
         return ResponseEntity.ok(updatedCategoryDto);
     }
 
-    @GetMapping("/api/categories")
+    @GetMapping("/categories")
     public List<CategoryDto> listCategories() {
         List<CategoryEntity> categories = categoryService.findAll();
         return categories.stream()
@@ -50,7 +51,7 @@ public class CategoryController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/api/category/{id}")
+    @GetMapping("/category/{id}")
     public ResponseEntity<CategoryDto> getCategory(@PathVariable("id") Long id) {
         Optional<CategoryEntity> foundCategory = categoryService.findOne(id);
         return foundCategory.map(categoryEntity -> {

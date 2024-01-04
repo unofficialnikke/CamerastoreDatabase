@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/api")
 public class ProductController {
     private ProductService productService;
 
@@ -23,24 +24,22 @@ public class ProductController {
         this.productMapper = productMapper;
     }
 
-    @PostMapping("/api/product")
+    @PostMapping("/product")
     public ResponseEntity<ProductDto> saveProduct(@RequestBody ProductDto product) {
-        ProductEntity productEntity = productMapper.mapFrom(product);
         ProductEntity savedProductEntity = productService.save(product);
         ProductDto productDto = productMapper.mapTo(savedProductEntity);
         return ResponseEntity.status(HttpStatus.CREATED).body(productDto);
     }
 
-    @PatchMapping("/api/product/{id}")
+    @PutMapping("/product/{id}")
     public ResponseEntity<ProductDto> updateProduct(@RequestBody ProductDto product, @PathVariable("id") Long id) {
-        ProductEntity productEntity = productMapper.mapFrom(product);
         product.setId(id);
         ProductEntity updatedProductEntity = productService.update(product);
         ProductDto updatedProductDto = productMapper.mapTo(updatedProductEntity);
         return ResponseEntity.ok(updatedProductDto);
     }
 
-    @GetMapping("/api/products")
+    @GetMapping("/products")
     public List<ProductDto> listProducts() {
         List<ProductEntity> products = productService.findAll();
         return products.stream()
@@ -48,7 +47,7 @@ public class ProductController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/api/product/{id}")
+    @GetMapping("/product/{id}")
     public ResponseEntity<ProductDto> getProduct(@PathVariable("id") Long id) {
         Optional<ProductEntity> foundProduct = productService.findOne(id);
         return foundProduct.map(productEntity -> {

@@ -37,7 +37,6 @@ public class ProductServiceImpl implements ProductService {
         SupplierEntity supplierEntity = modelMapper.map(productDto.getSupplier(), SupplierEntity.class);
         CategoryEntity categoryEntity = modelMapper.map(productDto.getCategory(), CategoryEntity.class);
         ProductEntity productEntity = modelMapper.map(productDto, ProductEntity.class);
-
         productEntity.setSupplierEntity(supplierEntity);
         productEntity.setCategoryEntity(categoryEntity);
         return productRepository.save(productEntity);

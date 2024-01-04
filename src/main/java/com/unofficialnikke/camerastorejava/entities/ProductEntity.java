@@ -40,11 +40,11 @@ public class ProductEntity {
         this.supplierEntity = supplierEntity;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category", nullable = false)
     private CategoryEntity categoryEntity;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "supplier", nullable = false)
     private SupplierEntity supplierEntity;
 

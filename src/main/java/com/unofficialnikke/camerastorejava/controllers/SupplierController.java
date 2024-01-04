@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/api")
 public class SupplierController {
 
     private SupplierService supplierService;
@@ -24,7 +25,7 @@ public class SupplierController {
         this.supplierMapper = supplierMapper;
     }
 
-    @PostMapping("/api/supplier")
+    @PostMapping("/supplier")
     public ResponseEntity<SupplierDto> saveSupplier(@RequestBody SupplierDto supplier) {
         SupplierEntity supplierEntity = supplierMapper.mapFrom(supplier);
         SupplierEntity savedSupplierEntity = supplierService.save(supplierEntity);
@@ -32,7 +33,7 @@ public class SupplierController {
         return ResponseEntity.status(HttpStatus.CREATED).body(supplierDto);
     }
 
-    @PatchMapping("/api/supplier/{id}")
+    @PutMapping("/supplier/{id}")
     public ResponseEntity<SupplierDto> updateSupplier(@RequestBody SupplierDto supplier, @PathVariable("id") Long id) {
         SupplierEntity supplierEntity = supplierMapper.mapFrom(supplier);
         supplierEntity.setId(id);
@@ -41,7 +42,7 @@ public class SupplierController {
         return ResponseEntity.ok(updatedSupplierDto);
     }
 
-    @GetMapping("/api/suppliers")
+    @GetMapping("/suppliers")
     public List<SupplierDto> listSuppliers() {
         List<SupplierEntity> suppliers = supplierService.findAll();
         return suppliers.stream()
@@ -49,7 +50,7 @@ public class SupplierController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/api/supplier/{id}")
+    @GetMapping("/supplier/{id}")
     public ResponseEntity<SupplierDto> getSupplier(@PathVariable("id") Long id) {
         Optional<SupplierEntity> foundSupplier = supplierService.findOne(id);
         return foundSupplier.map(supplierEntity -> {
