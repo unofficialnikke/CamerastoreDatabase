@@ -35,8 +35,7 @@ public class ProductController {
     public ResponseEntity<ProductDto> updateProduct(@RequestBody ProductDto product, @PathVariable("id") Long id) {
         product.setId(id);
         ProductEntity updatedProductEntity = productService.update(product);
-        ProductDto updatedProductDto = productMapper.mapTo(updatedProductEntity);
-        return ResponseEntity.ok(updatedProductDto);
+        return ResponseEntity.ok(productMapper.mapTo(updatedProductEntity));
     }
 
     @GetMapping("/products")
